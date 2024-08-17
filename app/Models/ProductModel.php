@@ -11,8 +11,8 @@ class ProductModel extends Model
 
     protected $allowedFields = ['name', 'description', 'price', 'stock'];
     protected $validationRules = [
-        'name'        => 'required|min_length[3]|max_length[255]',
-        'price'       => 'required|numeric',
-        'stock'       => 'required|integer',
+        'name'  => 'required|min_length[3]|max_length[255]',
+        'price' => 'required|numeric',
+        'stock' => 'required|integer',
     ];
 }

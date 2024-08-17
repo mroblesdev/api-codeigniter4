@@ -1,68 +1,117 @@
-# CodeIgniter 4 Application Starter
+# API RESTful en CodeIgniter 4
 
-## What is CodeIgniter?
+Este proyecto es una API RESTful creada con CodeIgniter 4 para realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar). 
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Requisitos Previos
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- PHP 7.4 o superior
+  - Extensión [intl](http://php.net/manual/en/intl.requirements.php)
+  - Extensión [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- Servidor MySQL 5.7 o superior
+- Composer instalado
+- Servidor Apache o Nginx
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Instalación
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+1. Clona este repositorio en tu servidor local:
+    ```bash
+    git clone https://github.com/mroblesdev/api-codeigniter4.git
+    ```
 
-## Installation & updates
+2. Accede al directorio del proyecto:
+    ```bash
+    cd api-codeigniter4
+    ```
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+3. Instala las dependencias del proyecto usando Composer:
+    ```bash
+    composer install
+    ```
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+4. Renombra el archivo `env` a `.env` y configura los datos de la base de datos:
+    ```bash
+    database.default.hostname = localhost
+    database.default.database = nombre_base_datos
+    database.default.username = tu_usuario
+    database.default.password = tu_contraseña
+    database.default.DBDriver = MySQLi
+    ```
 
-## Setup
+5. La tabla `products` tiene la siguiente estructura:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+    ```sql
+    CREATE TABLE `products` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `name` varchar(255) NOT NULL,
+      `description` text,
+      `price` decimal(10,2) NOT NULL,
+      `stock` int NOT NULL
+      PRIMARY KEY (`id`)
+    );
+    ```
 
-## Important Change with index.php
+6. Inicia el servidor de desarrollo de CodeIgniter:
+    ```bash
+    php spark serve
+    ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+7. La API estará disponible en `http://localhost:8080/products`.
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+## Endpoints de la API
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 1. Obtener Todos los Productos
+- **Método**: `GET`
+- **URL**: `/products`
+- **Descripción**: Devuelve una lista de todos los productos.
 
-## Repository Management
+### 2. Obtener Producto por ID
+- **Método**: `GET`
+- **URL**: `/products/{id}`
+- **Descripción**: Devuelve la información de un producto específico.
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 3. Crear un Nuevo Producto
+- **Método**: `POST`
+- **URL**: `/products`
+- **Descripción**: Crea un nuevo producto en la base de datos.
+- **Parámetros (Body)**:
+    ```json
+    {
+      "name": "Nuevo Producto",
+      "description": "Descripción del nuevo producto",
+      "price": 150.00,
+      "stock": 10
+    }
+    ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### 4. Actualizar un Producto
+- **Método**: `PUT`
+- **URL**: `/products/{id}`
+- **Descripción**: Actualiza la información de un producto existente.
+- **Parámetros (Body)**:
+    ```json
+    {
+      "name": "Producto Actualizado",
+      "description": "Descripción actualizada",
+      "price": 180.00,
+      "stock": 5
+    }
+    ```
 
-## Server Requirements
+### 5. Eliminar un Producto
+- **Método**: `DELETE`
+- **URL**: `/products/{id}`
+- **Descripción**: Elimina un producto de la base de datos.
 
-PHP version 7.4 or higher is required, with the following extensions installed:
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+## Contribuciones
 
-> [!WARNING]
-> The end of life date for PHP 7.4 was November 28, 2022.
-> The end of life date for PHP 8.0 was November 26, 2023.
-> If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> The end of life date for PHP 8.1 will be November 25, 2024.
+Siéntete libre de contribuir al proyecto.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## Expresiones de Gratitud 🎁
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+- Comenta a otros sobre este proyecto 📢
+- Invitame una cerveza 🍺 o un café ☕ [Da clic aquí](https://www.paypal.com/paypalme/markorobles?locale.x=es_XC.).
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - consulta el archivo [LICENSE](LICENSE) para más detalles.
